@@ -1,6 +1,6 @@
 import pandas as pd
 from typing import List
-
+import math
 
 def to_csv(text: str) -> str:
     """Convert raw text of .dbf to a .csv file.
@@ -14,6 +14,9 @@ def to_csv(text: str) -> str:
     )
     while double_space in text:
         text = text.replace(double_space, " ")
+        
+    with open("borrar.txt", "w") as file:
+        file.write(text)
     # Obtianing the bill of each line
     bill_list = text.split("\n")[12:]
 
@@ -55,10 +58,10 @@ def to_csv(text: str) -> str:
                 ignore_index=True,
             )
 
-        df.to_csv("bills.csv", index=False)
+    df.to_csv("transactions.csv", index=False)
 
 
-def get_name(possible_name: List[str]) -> str:
+def get_name(possible_name: List[str]) -> str | None:
     """Obtain real name of the product from the list of possible names.
 
     Args:
@@ -72,6 +75,12 @@ def get_name(possible_name: List[str]) -> str:
         if char == "B":
             break
         name.append(char)
-    if name and name[0].isnumeric():
-        name = name[1:]
+    if name: 
+        if name[0] == "0":
+            return "null"
+        if name[0].isnumeric():
+            name = name[1:] 
+    else:
+        return "null"
+    
     return " ".join(name)
