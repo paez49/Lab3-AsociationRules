@@ -1,8 +1,13 @@
 from utils import const, utils
 from model.model import Bill, Transaction
+
+
+from typing import List, Tuple
 import pandas as pd
 import json
 import math
+
+
 def parser():
 
     file_path = "files/fc15032024.DBF"
@@ -16,9 +21,14 @@ def parser():
     text = utils.to_csv(text)
 
 
-def to_model():
-    df = pd.read_csv("transactions.csv",dtype={"Product Name":str})
-    
+def to_model() -> Tuple[List[Bill], pd.DataFrame]:
+    """Create the Transaction and Bill objects from the .csv file.
+
+    Returns:
+        Tuple[List[Bill], pd.DataFrame]: Bills objects and the df with the transactions.
+    """
+    df = pd.read_csv("transactions.csv", dtype={"Product Name": str})
+
     bill_list = []
     transaction_list = []
 
@@ -33,27 +43,35 @@ def to_model():
             row["Unit Price"],
             row["Tax"],
             row["Subtotal"],
-            )
-        
+        )
+
         if bill_id == new_bill_id:
             if row["Product Name"]:
                 transaction_list.append(trans)
         else:
-            
+
             bill = Bill(bill_id, transaction_list)
             bill_list.append(bill)
             bill_id = new_bill_id
             transaction_list = []
-            if not isinstance(row["Product Name"],float) and math.isnan(row["Product Name"]):
+            if not isinstance(row["Product Name"], float) and math.isnan(
+                row["Product Name"]
+            ):
                 transaction_list.append(trans)
-        
-    bill_json = [b.to_dict() for b in bill_list]
-    json_data = json.dumps(bill_json, indent=4)
+
+    bill_dict = [b.to_dict() for b in bill_list]
+    json_data = json.dumps(bill_dict, indent=4)
     with open("bills.json", "w") as outfile:
         outfile.write(json_data)
+
+    return bill_list, df
+
+
 def main() -> None:
     #parser() #Uncomment if you want to read de .dbf again.
-    to_model()
+    bill_list, df = to_model()
+    utils.general_info(df,bill_list)
+
 
 
 if __name__ == "__main__":
