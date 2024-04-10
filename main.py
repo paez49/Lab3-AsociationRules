@@ -27,7 +27,7 @@ def to_model() -> Tuple[List[Bill], pd.DataFrame]:
     Returns:
         Tuple[List[Bill], pd.DataFrame]: Bills objects and the df with the transactions.
     """
-    df = pd.read_csv("transactions.csv", dtype={"Product Name": str})
+    df = pd.read_csv("output_files/transactions.csv", dtype={"Product Name": str})
 
     bill_list = []
     transaction_list = []
@@ -61,7 +61,7 @@ def to_model() -> Tuple[List[Bill], pd.DataFrame]:
 
     bill_dict = [b.to_dict() for b in bill_list]
     json_data = json.dumps(bill_dict, indent=4)
-    with open("bills.json", "w") as outfile:
+    with open("output_files/bills.json", "w") as outfile:
         outfile.write(json_data)
 
     return bill_list, df
@@ -70,8 +70,7 @@ def to_model() -> Tuple[List[Bill], pd.DataFrame]:
 def main() -> None:
     #parser() #Uncomment if you want to read de .dbf again.
     bill_list, df = to_model()
-    utils.general_info(df,bill_list)
-
+    utils.general_info(df, bill_list)
 
 
 if __name__ == "__main__":
