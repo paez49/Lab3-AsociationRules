@@ -10,9 +10,11 @@ def measure_time(func):
 
     def wrapper(*args, **kwargs):
         time_start = time()
-        res = func(*args, **kwargs)
+        func(*args, **kwargs)
         time_end = time()
         total_time = time_end - time_start
-        print(f"Time elapsed {func.__name__}: {total_time:.2f} seconds.")
-        return res
+        print(
+            f"### Time elapsed {func.__name__}: {total_time:.2f} seconds."
+        )
+
     return wrapper

@@ -62,26 +62,26 @@ class Parser:
                 unit_price = float(trans_info[4])
                 subtotal = float(count * unit_price)
                 possible_name = trans_info[
-                    10:16
+                    10:20
                 ]  # Usually in the data, the name began in index of 10
                 name = self.get_product_name(possible_name)
-
-                df = pd.concat(
-                    [
-                        df,
-                        pd.DataFrame(
-                            {
-                                "Bill Id": [i],
-                                "Product Name": [name],
-                                "Count": [count],
-                                "Tax": [tax],
-                                "Unit Price": [unit_price],
-                                "Subtotal": [subtotal],
-                            }
-                        ),
-                    ],
-                    ignore_index=True,
-                )
+                if name != "null" and not self.are_only_numbers(name):
+                    df = pd.concat(
+                        [
+                            df,
+                            pd.DataFrame(
+                                {
+                                    "Bill Id": [i],
+                                    "Product Name": [name],
+                                    "Count": [count],
+                                    "Tax": [tax],
+                                    "Unit Price": [unit_price],
+                                    "Subtotal": [subtotal],
+                                }
+                            ),
+                        ],
+                        ignore_index=True,
+                    )
 
         df.to_csv("output_files/transactions.csv", index=False)
 
@@ -95,19 +95,34 @@ class Parser:
             str: Name of the product. If the name is not valid, return "null".
         """
         name = []
-        for char in possible_name:
+        if possible_name and possible_name[0].isnumeric():
+            possible_name = possible_name[1:]
+        for i, char in enumerate(possible_name):
             if char == "B" or char == ",":
                 break
-            name.append(char)
-        if name:
-            if name[0] == "0":
-                return "null"
-            if name[0].isnumeric():
-                name = name[1:]
-        else:
+
+            if self.are_only_numbers(char):
+                if i + 1 < len(possible_name) and possible_name[i + 1].isalpha():
+                    name.append(char)
+            else:
+                name.append(char)
+        if not name:
             return "null"
 
         return " ".join(name)
+
+    def are_only_numbers(self, text: str) -> bool:
+        """Check if the text is only numbers.
+
+        Args:
+            text (str): Text to check.
+
+        Returns:
+            bool: True if the text is only numbers, False otherwise.
+        """
+        text_no_spaces = text.replace(" ", "")
+        text_no_points = text_no_spaces.replace(".", "")
+        return all(char.isnumeric() for char in text_no_points)
 
     def show_general_info(self, df: pd.DataFrame, bill_list: List[Bill]) -> None:
         """Show general information of the transactions.
@@ -116,6 +131,7 @@ class Parser:
             df (pd.DataFrame): Dataframe with the transactions.
             bill_list (List[Bill]): List with the Bill objects.
         """
+        print("# General Information")
         print(f"The total registered transactions on friday was: {df.shape[0]:,}")
 
         total_count_items = sum(bill.count_items for bill in bill_list)
@@ -142,7 +158,7 @@ class Parser:
                 product_count[product] += 1
 
         most_sell_it = []
-        print("The top 10 most bought products on friday were: ")
+        print("## The top 10 most bought products on friday were: ")
         for i, (product, count) in enumerate(
             sorted(product_count.items(), key=lambda x: x[1], reverse=True)[:10]
         ):
@@ -151,7 +167,7 @@ class Parser:
 
         less_sell_it = []
         print("")
-        print("The top 10 least bought products on friday were: ")
+        print("## The top 10 least bought products on friday were: ")
         for index, (product, count) in enumerate(
             sorted(product_count.items(), key=lambda x: x[1])[:10], start=1
         ):
@@ -159,16 +175,18 @@ class Parser:
             less_sell_it.append(product)
 
         print(
-            "One of the less bought products was'MAIZ TOSTADO 160GR' and was selled with:"
+            "## One of the less bought products was'MAIZ TOSTADO 160GR' and was selled with:"
         )
+        selled_with_corn = []
         for bill in bill_list:
             for item in bill.line_items:
                 if item.name in "MAIZ TOSTADO 160GR":
-                    print([t.name for t in bill.line_items][0:10])
+                    selled_with_corn=[t.name for t in bill.line_items][0:10]
                     break
-
+        for prod in selled_with_corn:
+            print(f"- {prod}")
         self.obtain_combos(bill_list, less_sell_it, most_sell_it)
-        print(df.describe())
+        #print(df.describe())
 
     def obtain_combos(
         self, bill_list: List[Bill], less_sell_it: List[str], most_sell_it: List[str]
@@ -224,10 +242,7 @@ class Parser:
                 bill_list.append(bill)
                 bill_id = new_bill_id
                 transaction_list = []
-                if not isinstance(row["Product Name"], float) and math.isnan(
-                    row["Product Name"]
-                ):
-                    transaction_list.append(trans)
+                transaction_list.append(trans)
 
         bill_dict = [b.to_dict() for b in bill_list]
         json_data = json.dumps(bill_dict, indent=4)
