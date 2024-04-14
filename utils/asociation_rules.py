@@ -15,7 +15,17 @@ def apriori_execution(df: pd.DataFrame, threshold: float) -> pd.DataFrame:
         frequent_itemsets, metric="confidence", min_threshold=threshold
     )
     print(rules.head().to_markdown())
-
+    print("### K = 1")
+    apriori_single_consequent_rules = rules[
+        rules["consequents"].apply(lambda x: len(x) == 1)
+    ]
+    count = 0
+    for _, row in apriori_single_consequent_rules.iterrows():
+            if count < 3:
+                print(f"* {list(row['antecedents'])[0]} -> {list(row['consequents'])[0]}")
+                count += 1
+            else:
+                break
 
 @measure_time
 def fp_growth_execution(df: pd.DataFrame, threshold: float) -> pd.DataFrame:
@@ -24,6 +34,17 @@ def fp_growth_execution(df: pd.DataFrame, threshold: float) -> pd.DataFrame:
         frequent_itemsets, metric="confidence", min_threshold=threshold
     )
     print(rules.head().to_markdown())
+    print("### K = 1")
+    fp_growth_single_consequent_rules = rules[
+        rules["consequents"].apply(lambda x: len(x) == 1)
+    ]
+    count = 0
+    for _, row in fp_growth_single_consequent_rules.iterrows():
+        if count < 3:
+            print(f"* {list(row['antecedents'])[0]} -> {list(row['consequents'])[0]}")
+            count += 1
+        else:
+            break
 
 
 def execute_association_rules(bill_list: List[Bill]) -> None:
@@ -40,3 +61,4 @@ def execute_association_rules(bill_list: List[Bill]) -> None:
         print(f"## Threshold: {threshold}")
         apriori_execution(df, threshold)
         fp_growth_execution(df, threshold)
+
