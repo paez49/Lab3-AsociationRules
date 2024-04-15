@@ -9,23 +9,29 @@ import pandas as pd
 import math
 from collections import defaultdict
 import json
+import random
 
 
 class Parser:
     def parse_data(self):
         """Read .dbf file and delete special characters, and convert it to a .csv file."""
-        file_path = "files/fc15032024.DBF"
+        file_path_1 = "files/fc15032024.DBF"
+        file_path_2 = "files/fc05042024.DBF"
 
-        with open(file_path, "r", encoding="ISO-8859-1") as file:
-            text = file.read()
+        
+        with open(file_path_1, "r", encoding="ISO-8859-1") as file:
+            text_1 = file.read()
+        with open(file_path_2, "r", encoding="ISO-8859-1") as file:
+            text_2 = file.read()
+        texts = [text_1, text_2]
+        i  = 0 
+        for i,text in enumerate(texts):    
+            for char in SPECIAL_CHARS.values():
+                text = text.replace(char, "")
 
-        for char in SPECIAL_CHARS.values():
-            text = text.replace(char, "")
+            text = self.to_csv(text,i)
 
-        text = self.to_csv(text)
-
-    def to_csv(self, text: str) -> None:
-        """Split the transactions with the special character SOH, and write it to a .csv file."""
+    def to_csv(self, text: str,index:int) -> None:
         double_space = "  "
         df = pd.DataFrame(
             columns=[
@@ -83,7 +89,7 @@ class Parser:
                         ignore_index=True,
                     )
 
-        df.to_csv("output_files/transactions.csv", index=False)
+        df.to_csv(f"output_files/transactions_{index}.csv", index=False)
 
     def get_product_name(self, possible_name: List[str]) -> str:
         """Obtain real name of the product from the list of possible names.
@@ -215,8 +221,10 @@ class Parser:
         Returns:
             Tuple[List[Bill], pd.DataFrame]: Bills objects and the df with the transactions.
         """
-        df = pd.read_csv("output_files/transactions.csv", dtype={"Product Name": str})
-
+        df_1 = pd.read_csv("output_files/transactions_0.csv", dtype={"Product Name": str})
+        df_2 = pd.read_csv("output_files/transactions_1.csv", dtype={"Product Name": str})
+        
+        df = pd.concat([df_1, df_2], ignore_index=True)
         bill_list = []
         transaction_list = []
 
