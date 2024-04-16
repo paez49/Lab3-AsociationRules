@@ -18,20 +18,20 @@ class Parser:
         file_path_1 = "files/fc15032024.DBF"
         file_path_2 = "files/fc05042024.DBF"
 
-        
         with open(file_path_1, "r", encoding="ISO-8859-1") as file:
             text_1 = file.read()
         with open(file_path_2, "r", encoding="ISO-8859-1") as file:
             text_2 = file.read()
         texts = [text_1, text_2]
-        i  = 0 
-        for i,text in enumerate(texts):    
+        i = 0
+        last_bill_index = 0
+        for i, text in enumerate(texts):
             for char in SPECIAL_CHARS.values():
                 text = text.replace(char, "")
 
-            text = self.to_csv(text,i)
+            last_bill_index = self.to_csv(text, i, last_bill_index)
 
-    def to_csv(self, text: str,index:int) -> None:
+    def to_csv(self, text: str, index_file: int, last_bill_index: int) -> None:
         double_space = "  "
         df = pd.DataFrame(
             columns=[
@@ -48,8 +48,8 @@ class Parser:
 
         # Obtianing the bill of each line
         bill_list = text.split("\n")[12:]
-
-        for i, bill in enumerate(bill_list):
+        i = last_bill_index
+        for bill in bill_list:
             transactions = bill.split("")[0:]
             # Obtain the transactions of the bill
             for trans in transactions:
@@ -88,8 +88,10 @@ class Parser:
                         ],
                         ignore_index=True,
                     )
+            i += 1
 
-        df.to_csv(f"output_files/transactions_{index}.csv", index=False)
+        df.to_csv(f"output_files/transactions_{index_file}.csv", index=False)
+        return i
 
     def get_product_name(self, possible_name: List[str]) -> str:
         """Obtain real name of the product from the list of possible names.
@@ -187,12 +189,12 @@ class Parser:
         for bill in bill_list:
             for item in bill.line_items:
                 if item.name in "MAIZ TOSTADO 160GR":
-                    selled_with_corn=[t.name for t in bill.line_items][0:10]
+                    selled_with_corn = [t.name for t in bill.line_items][0:10]
                     break
         for prod in selled_with_corn:
             print(f"- {prod}")
         self.obtain_combos(bill_list, less_sell_it, most_sell_it)
-        #print(df.describe())
+        # print(df.describe())
 
     def obtain_combos(
         self, bill_list: List[Bill], less_sell_it: List[str], most_sell_it: List[str]
@@ -221,9 +223,13 @@ class Parser:
         Returns:
             Tuple[List[Bill], pd.DataFrame]: Bills objects and the df with the transactions.
         """
-        df_1 = pd.read_csv("output_files/transactions_0.csv", dtype={"Product Name": str})
-        df_2 = pd.read_csv("output_files/transactions_1.csv", dtype={"Product Name": str})
-        
+        df_1 = pd.read_csv(
+            "output_files/transactions_0.csv", dtype={"Product Name": str}
+        )
+        df_2 = pd.read_csv(
+            "output_files/transactions_1.csv", dtype={"Product Name": str}
+        )
+
         df = pd.concat([df_1, df_2], ignore_index=True)
         bill_list = []
         transaction_list = []
