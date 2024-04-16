@@ -12,7 +12,13 @@ import re
 
 
 @measure_time
-def apriori_execution(df: pd.DataFrame, threshold: float) -> pd.DataFrame:
+def apriori_execution(df: pd.DataFrame, threshold: float) -> None:
+    """Execute Apriori algorithm.
+
+    Args:
+        df (pd.DataFrame): Transactions info.
+        threshold (float): Threshold to execute the algorithm.
+    """
     frequent_itemsets = apriori(df, min_support=threshold, use_colnames=True)
     rules = association_rules(frequent_itemsets, metric="confidence", min_threshold=0.8)
     print(rules.head().to_markdown())
@@ -20,7 +26,13 @@ def apriori_execution(df: pd.DataFrame, threshold: float) -> pd.DataFrame:
 
 
 @measure_time
-def fp_growth_execution(df: pd.DataFrame, threshold: float) -> pd.DataFrame:
+def fp_growth_execution(df: pd.DataFrame, threshold: float) -> None:
+    """Execute FP Growth algorithm.
+
+    Args:
+        df (pd.DataFrame): Transactions info.
+        threshold (float): Threshold to execute the algorithm.
+    """
     frequent_itemsets = fpgrowth(df, min_support=threshold, use_colnames=True)
     rules = association_rules(frequent_itemsets, metric="confidence", min_threshold=0.8)
     print(rules.head().to_markdown())
@@ -28,6 +40,12 @@ def fp_growth_execution(df: pd.DataFrame, threshold: float) -> pd.DataFrame:
 
 
 def plot_apriori_rules(rules: pd.DataFrame, threshold: float) -> None:
+    """Plot graph of Apriori rules.
+
+    Args:
+        rules (pd.DataFrame): Rules of the asociation rules.
+        threshold (float): Threshold to output the graph.
+    """
     print("### K = 1")
     apriori_single_consequent_rules = rules[
         rules["consequents"].apply(lambda x: len(x) == 1)
@@ -83,6 +101,12 @@ def plot_apriori_rules(rules: pd.DataFrame, threshold: float) -> None:
 
 
 def plot_fp_growth_rules(rules: pd.DataFrame, threshold: float) -> None:
+    """Plot graph of FP Growth rules.
+
+    Args:
+        rules (pd.DataFrame): Rules of the asociation rules.
+        threshold (float): Threshold to output the graph.
+    """
     print("### K = 1")
     fp_growth_single_consequent_rules = rules[
         rules["consequents"].apply(lambda x: len(x) == 1)
@@ -139,6 +163,11 @@ def plot_fp_growth_rules(rules: pd.DataFrame, threshold: float) -> None:
 
 
 def execute_association_rules(bill_list: List[Bill]) -> None:
+    """Execute apriori and fp-growth algorithms.
+
+    Args:
+        bill_list (List[Bill]): List of bills.
+    """
     transaction_list = []
     for bill in bill_list:
         transaction_list.append([trans.name for trans in bill.line_items])
@@ -154,7 +183,12 @@ def execute_association_rules(bill_list: List[Bill]) -> None:
         fp_growth_execution(df, threshold)
 
 
-def print_rules(rules):
+def print_rules(rules: pd.DataFrame):
+    """Print asociation rules.
+
+    Args:
+        rules (pd.DataFrame): Rules to be printed.
+    """
     count = 0
     for _, row in rules.iterrows():
         if count < 3:
@@ -164,7 +198,12 @@ def print_rules(rules):
             break
 
 
-def print_k_greater_than_one(rules):
+def print_k_greater_than_one(rules: pd.DataFrame):
+    """
+    Print asociation rules with K greater than 1.
+    Args:
+        rules (pd.DataFrame): Rules to be printed.
+    """
     count = 0
     for _, row in rules.iterrows():
         if count < 5:
@@ -178,5 +217,13 @@ def print_k_greater_than_one(rules):
         print("**No results for K greater than 1.**")
 
 
-def join_frozenset(frozen_set):
+def join_frozenset(frozen_set: frozenset) -> str:
+    """Join frozenset elements.
+
+    Args:
+        frozen_set (frozenset): Frozenset to be joined.
+
+    Returns:
+        str: Joined frozenset.
+    """
     return ", ".join(frozen_set)

@@ -56,33 +56,33 @@ The total taxes on friday was: 25,042,875.66
 * ALPIN BOTELLA 300ML -> EMPANADAS
 ![Apriori K = 1 Threshold 0.1 ](images/apriori_k1_0.1.png)
 ### K > 1
-* BRISA LIMON-MANZANA 600ML, ALPIN CAJA 200 ML -> PASTELES. PALITOS, EMPANADAS
-* ALPIN CAJA 200 ML, HALLS BARRA 25 GR -> PASTELES. PALITOS, EMPANADAS
-* PASTILLAS CHAO CEREZA, ALPIN CAJA 200 ML -> EMPANADAS, JUGO HIT 500 ML
-* PASTILLAS CHAO CEREZA, ALPIN CAJA 200 ML -> PASTELES. PALITOS, EMPANADAS
-* SANDWICH SENCILLO, ALPIN CAJA 200 ML -> PASTELES. PALITOS, EMPANADAS
+* ALPIN CAJA 200 ML, BRISA LIMON-MANZANA 600ML -> EMPANADAS, PASTELES. PALITOS
+* ALPIN CAJA 200 ML, HALLS BARRA 25 GR -> EMPANADAS, PASTELES. PALITOS
+* ALPIN CAJA 200 ML, PASTILLAS CHAO CEREZA -> EMPANADAS, JUGO HIT 500 ML
+* ALPIN CAJA 200 ML, PASTILLAS CHAO CEREZA -> EMPANADAS, PASTELES. PALITOS
+* ALPIN CAJA 200 ML, SANDWICH SENCILLO -> EMPANADAS, PASTELES. PALITOS
 ![Apriori K > 1 Threshold 0.1 ](images/apriori_k_g_1_0.1.png)
-### Time elapsed apriori_execution: 1.55 seconds.
+### Time elapsed apriori_execution: 1.56 seconds.
 |    | antecedents                                                                | consequents                    |   antecedent support |   consequent support |   support |   confidence |    lift |   leverage |   conviction |   zhangs_metric |
 |---:|:---------------------------------------------------------------------------|:-------------------------------|---------------------:|---------------------:|----------:|-------------:|--------:|-----------:|-------------:|----------------:|
 |  0 | frozenset({'PASTILLAS CHAO CEREZA'})                                       | frozenset({'EMPANADAS'})       |               0.4    |               0.6075 |    0.3275 |     0.81875  | 1.34774 |  0.0845    |      2.16552 |        0.430025 |
-|  1 | frozenset({'PASTILLAS CHAO CEREZA', 'JUGO HIT 500 ML'})                    | frozenset({'EMPANADAS'})       |               0.2775 |               0.6075 |    0.25   |     0.900901 | 1.48296 |  0.0814187 |      3.96068 |        0.450761 |
+|  1 | frozenset({'JUGO HIT 500 ML', 'PASTILLAS CHAO CEREZA'})                    | frozenset({'EMPANADAS'})       |               0.2775 |               0.6075 |    0.25   |     0.900901 | 1.48296 |  0.0814187 |      3.96068 |        0.450761 |
 |  2 | frozenset({'CANDYRANCH 13GR', 'PASTILLAS CHAO CEREZA'})                    | frozenset({'EMPANADAS'})       |               0.2525 |               0.6075 |    0.22   |     0.871287 | 1.43422 |  0.0666062 |      3.04942 |        0.405024 |
-|  3 | frozenset({'CANDYRANCH 13GR', 'EMPANADAS', 'PASTILLAS CHAO CEREZA'})       | frozenset({'JUGO HIT 500 ML'}) |               0.22   |               0.4725 |    0.18   |     0.818182 | 1.7316  |  0.07605   |      2.90125 |        0.541667 |
-|  4 | frozenset({'CANDYRANCH 13GR', 'PASTILLAS CHAO CEREZA', 'JUGO HIT 500 ML'}) | frozenset({'EMPANADAS'})       |               0.1975 |               0.6075 |    0.18   |     0.911392 | 1.50023 |  0.0600187 |      4.42964 |        0.415498 |
+|  3 | frozenset({'EMPANADAS', 'CANDYRANCH 13GR', 'PASTILLAS CHAO CEREZA'})       | frozenset({'JUGO HIT 500 ML'}) |               0.22   |               0.4725 |    0.18   |     0.818182 | 1.7316  |  0.07605   |      2.90125 |        0.541667 |
+|  4 | frozenset({'PASTILLAS CHAO CEREZA', 'CANDYRANCH 13GR', 'JUGO HIT 500 ML'}) | frozenset({'EMPANADAS'})       |               0.1975 |               0.6075 |    0.18   |     0.911392 | 1.50023 |  0.0600187 |      4.42964 |        0.415498 |
 ### K = 1
 * PASTILLAS CHAO CEREZA -> EMPANADAS
-* PASTILLAS CHAO CEREZA -> EMPANADAS
+* JUGO HIT 500 ML -> EMPANADAS
 * CANDYRANCH 13GR -> EMPANADAS
 ![Apriori K = 1 Threshold 0.1 ](images/fp_growth_k1_0.1.png)
 ### K > 1
-* CANDYRANCH 13GR, TRIDENT 10 GR, PASTILLAS CHAO CEREZA, COCA COLA FLEXI 400 ML -> EMPANADAS, JUGO HIT 500 ML
+* COCA COLA FLEXI 400 ML, CANDYRANCH 13GR, TRIDENT 10 GR, PASTILLAS CHAO CEREZA -> EMPANADAS, JUGO HIT 500 ML
 * COCA COLA FLEXI 400 ML, PASTELES. PALITOS, PASTILLAS CHAO CEREZA -> EMPANADAS, JUGO HIT 500 ML
 * CANDYRANCH 13GR, PASTELES. PALITOS, PASTILLAS CHAO CEREZA -> EMPANADAS, JUGO HIT 500 ML
-* CANDYRANCH 13GR, COCA COLA FLEXI 400 ML, PASTELES. PALITOS, PASTILLAS CHAO CEREZA -> EMPANADAS, JUGO HIT 500 ML
-* COCA COLA FLEXI 400 ML, PASTILLAS CHAO CEREZA, PONKY 33 GR -> EMPANADAS, JUGO HIT 500 ML
+* COCA COLA FLEXI 400 ML, CANDYRANCH 13GR, PASTELES. PALITOS, PASTILLAS CHAO CEREZA -> EMPANADAS, JUGO HIT 500 ML
+* COCA COLA FLEXI 400 ML, PONKY 33 GR, PASTILLAS CHAO CEREZA -> EMPANADAS, JUGO HIT 500 ML
 ![Apriori K > 1 Threshold 0.1 ](images/fp_growth_k_g_1_0.1.png)
-### Time elapsed fp_growth_execution: 1.64 seconds.
+### Time elapsed fp_growth_execution: 1.70 seconds.
 ## Threshold: 0.2
 |    | antecedents                              | consequents              |   antecedent support |   consequent support |   support |   confidence |    lift |   leverage |   conviction |   zhangs_metric |
 |---:|:-----------------------------------------|:-------------------------|---------------------:|---------------------:|----------:|-------------:|--------:|-----------:|-------------:|----------------:|
@@ -99,23 +99,23 @@ The total taxes on friday was: 25,042,875.66
 ### K > 1
 **No results for K greater than 1.**
 ![Apriori K > 1 Threshold 0.2 ](images/apriori_k_g_1_0.2.png)
-### Time elapsed apriori_execution: 0.89 seconds.
+### Time elapsed apriori_execution: 0.84 seconds.
 |    | antecedents                                                    | consequents                    |   antecedent support |   consequent support |   support |   confidence |    lift |   leverage |   conviction |   zhangs_metric |
 |---:|:---------------------------------------------------------------|:-------------------------------|---------------------:|---------------------:|----------:|-------------:|--------:|-----------:|-------------:|----------------:|
 |  0 | frozenset({'PASTILLAS CHAO CEREZA'})                           | frozenset({'EMPANADAS'})       |               0.4    |               0.6075 |    0.3275 |     0.81875  | 1.34774 |  0.0845    |      2.16552 |        0.430025 |
-|  1 | frozenset({'PASTILLAS CHAO CEREZA', 'JUGO HIT 500 ML'})        | frozenset({'EMPANADAS'})       |               0.2775 |               0.6075 |    0.25   |     0.900901 | 1.48296 |  0.0814187 |      3.96068 |        0.450761 |
+|  1 | frozenset({'JUGO HIT 500 ML', 'PASTILLAS CHAO CEREZA'})        | frozenset({'EMPANADAS'})       |               0.2775 |               0.6075 |    0.25   |     0.900901 | 1.48296 |  0.0814187 |      3.96068 |        0.450761 |
 |  2 | frozenset({'CANDYRANCH 13GR', 'PASTILLAS CHAO CEREZA'})        | frozenset({'EMPANADAS'})       |               0.2525 |               0.6075 |    0.22   |     0.871287 | 1.43422 |  0.0666062 |      3.04942 |        0.405024 |
 |  3 | frozenset({'COCA COLA FLEXI 400 ML', 'PASTILLAS CHAO CEREZA'}) | frozenset({'EMPANADAS'})       |               0.2425 |               0.6075 |    0.2075 |     0.85567  | 1.40851 |  0.0601812 |      2.71946 |        0.382878 |
 |  4 | frozenset({'COCA COLA FLEXI 400 ML', 'PASTILLAS CHAO CEREZA'}) | frozenset({'JUGO HIT 500 ML'}) |               0.2425 |               0.4725 |    0.2    |     0.824742 | 1.74549 |  0.0854188 |      3.00985 |        0.56382  |
 ### K = 1
 * PASTILLAS CHAO CEREZA -> EMPANADAS
-* PASTILLAS CHAO CEREZA -> EMPANADAS
+* JUGO HIT 500 ML -> EMPANADAS
 * CANDYRANCH 13GR -> EMPANADAS
 ![Apriori K = 1 Threshold 0.2 ](images/fp_growth_k1_0.2.png)
 ### K > 1
 **No results for K greater than 1.**
 ![Apriori K > 1 Threshold 0.2 ](images/fp_growth_k_g_1_0.2.png)
-### Time elapsed fp_growth_execution: 0.95 seconds.
+### Time elapsed fp_growth_execution: 0.92 seconds.
 ## Threshold: 0.25
 |    | antecedents                          | consequents              |   antecedent support |   consequent support |   support |   confidence |    lift |   leverage |   conviction |   zhangs_metric |
 |---:|:-------------------------------------|:-------------------------|---------------------:|---------------------:|----------:|-------------:|--------:|-----------:|-------------:|----------------:|
@@ -136,19 +136,19 @@ The total taxes on friday was: 25,042,875.66
 |    | antecedents                                              | consequents              |   antecedent support |   consequent support |   support |   confidence |    lift |   leverage |   conviction |   zhangs_metric |
 |---:|:---------------------------------------------------------|:-------------------------|---------------------:|---------------------:|----------:|-------------:|--------:|-----------:|-------------:|----------------:|
 |  0 | frozenset({'PASTILLAS CHAO CEREZA'})                     | frozenset({'EMPANADAS'}) |               0.4    |               0.6075 |    0.3275 |     0.81875  | 1.34774 |  0.0845    |      2.16552 |        0.430025 |
-|  1 | frozenset({'PASTILLAS CHAO CEREZA', 'JUGO HIT 500 ML'})  | frozenset({'EMPANADAS'}) |               0.2775 |               0.6075 |    0.25   |     0.900901 | 1.48296 |  0.0814187 |      3.96068 |        0.450761 |
+|  1 | frozenset({'JUGO HIT 500 ML', 'PASTILLAS CHAO CEREZA'})  | frozenset({'EMPANADAS'}) |               0.2775 |               0.6075 |    0.25   |     0.900901 | 1.48296 |  0.0814187 |      3.96068 |        0.450761 |
 |  2 | frozenset({'PONKY 33 GR'})                               | frozenset({'EMPANADAS'}) |               0.3325 |               0.6075 |    0.2825 |     0.849624 | 1.39856 |  0.0805062 |      2.61012 |        0.426933 |
 |  3 | frozenset({'JUGO HIT 500 ML'})                           | frozenset({'EMPANADAS'}) |               0.4725 |               0.6075 |    0.3925 |     0.830688 | 1.36739 |  0.105456  |      2.3182  |        0.509343 |
 |  4 | frozenset({'COCA COLA FLEXI 400 ML', 'JUGO HIT 500 ML'}) | frozenset({'EMPANADAS'}) |               0.3    |               0.6075 |    0.25   |     0.833333 | 1.37174 |  0.06775   |      2.355   |        0.387143 |
 ### K = 1
 * PASTILLAS CHAO CEREZA -> EMPANADAS
-* PASTILLAS CHAO CEREZA -> EMPANADAS
+* JUGO HIT 500 ML -> EMPANADAS
 * PONKY 33 GR -> EMPANADAS
 ![Apriori K = 1 Threshold 0.25 ](images/fp_growth_k1_0.25.png)
 ### K > 1
 **No results for K greater than 1.**
 ![Apriori K > 1 Threshold 0.25 ](images/fp_growth_k_g_1_0.25.png)
-### Time elapsed fp_growth_execution: 0.60 seconds.
+### Time elapsed fp_growth_execution: 0.59 seconds.
 ## Threshold: 0.3
 |    | antecedents                          | consequents              |   antecedent support |   consequent support |   support |   confidence |    lift |   leverage |   conviction |   zhangs_metric |
 |---:|:-------------------------------------|:-------------------------|---------------------:|---------------------:|----------:|-------------:|--------:|-----------:|-------------:|----------------:|
@@ -164,7 +164,7 @@ The total taxes on friday was: 25,042,875.66
 ### K > 1
 **No results for K greater than 1.**
 ![Apriori K > 1 Threshold 0.3 ](images/apriori_k_g_1_0.3.png)
-### Time elapsed apriori_execution: 0.58 seconds.
+### Time elapsed apriori_execution: 0.57 seconds.
 |    | antecedents                          | consequents              |   antecedent support |   consequent support |   support |   confidence |    lift |   leverage |   conviction |   zhangs_metric |
 |---:|:-------------------------------------|:-------------------------|---------------------:|---------------------:|----------:|-------------:|--------:|-----------:|-------------:|----------------:|
 |  0 | frozenset({'PASTILLAS CHAO CEREZA'}) | frozenset({'EMPANADAS'}) |               0.4    |               0.6075 |    0.3275 |     0.81875  | 1.34774 |   0.0845   |      2.16552 |        0.430025 |
@@ -179,7 +179,7 @@ The total taxes on friday was: 25,042,875.66
 ### K > 1
 **No results for K greater than 1.**
 ![Apriori K > 1 Threshold 0.3 ](images/fp_growth_k_g_1_0.3.png)
-### Time elapsed fp_growth_execution: 0.58 seconds.
+### Time elapsed fp_growth_execution: 0.52 seconds.
 ## Threshold: 0.35
 |    | antecedents                    | consequents              |   antecedent support |   consequent support |   support |   confidence |    lift |   leverage |   conviction |   zhangs_metric |
 |---:|:-------------------------------|:-------------------------|---------------------:|---------------------:|----------:|-------------:|--------:|-----------:|-------------:|----------------:|
@@ -200,4 +200,4 @@ The total taxes on friday was: 25,042,875.66
 ### K > 1
 **No results for K greater than 1.**
 ![Apriori K > 1 Threshold 0.35 ](images/fp_growth_k_g_1_0.35.png)
-### Time elapsed fp_growth_execution: 0.47 seconds.
+### Time elapsed fp_growth_execution: 0.42 seconds.

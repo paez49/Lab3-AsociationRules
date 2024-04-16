@@ -31,7 +31,17 @@ class Parser:
 
             last_bill_index = self.to_csv(text, i, last_bill_index)
 
-    def to_csv(self, text: str, index_file: int, last_bill_index: int) -> None:
+    def to_csv(self, text: str, index_file: int, last_bill_index: int) -> int:
+        """
+        Convert the text of the .dbf to a .csv file with the transactions.
+        Args:
+            text (str): Raw text of the .dbf file.
+            index_file (int): Index file to save the transactions.
+            last_bill_index (int): Last bill index in the previous file.
+
+        Returns:
+            int: Last bill index written in the file.
+        """
         double_space = "  "
         df = pd.DataFrame(
             columns=[
